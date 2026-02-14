@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Valentine's Day</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #1b0a18;
+      --bg2: #2f0f2a;
+      --card: rgba(255,255,255,0.06);
+      --accent: #ff6b81;
+      --accent-2: #ff3b6b;
+      --text: #fff6f9;
+      --muted: rgba(255,255,255,0.75);
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(255,120,140,0.06), transparent),
+                  linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    .container{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3rem 1rem;
+      position:relative;
+      z-index:1;
+      text-align:center;
+    }
+
+    header.brand{
+      position:fixed;
+      left:24px;
+      top:18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      z-index:5;
+    }
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:white;
+      font-family:'Playfair Display', serif;
+      box-shadow:0 8px 24px rgba(255,59,107,0.18);
+    }
+    .brand h4{
+      margin:0;
+      font-family:'Playfair Display', serif;
+      font-size:1rem;
+      color:var(--muted);
+    }
+
+    .card{
+      width:min(920px, 96%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;
+      padding:2.2rem;
+      box-shadow: 0 12px 40px rgba(6,6,10,0.55);
+      border: 1px solid rgba(255,255,255,0.04);
+      position:relative;
+      overflow:hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .card .top-row{
+      display:flex;
+      gap:1rem;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom:0.6rem;
+    }
+
+    .title{
+      text-align:left;
+    }
+    .title h1{
+      margin:0;
+      font-family:'Playfair Display', serif;
+      font-size:1.8rem;
+      letter-spacing:0.2px;
+      color: #fff3f5;
+    }
+    .title p{
+      margin:4px 0 0 0;
+      font-size:0.92rem;
+      color:var(--muted);
+    }
+
+    .heart-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:none;
+      color:white;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 8px 24px rgba(255,59,107,0.18);
+      transform-origin:center;
+    }
+    .heart{
+      width:18px;
+      height:18px;
+      display:inline-block;
+      transform:translateY(1px);
+    }
+
+    /* Message area */
+    .message{
+      margin-top:1rem;
+      text-align:left;
+      font-size:1.05rem;
+      line-height:1.7;
+      color: #fff6f9;
+      max-height:420px;
+      overflow:auto;
+      padding-right:8px;
+    }
+    .message .small{
+      color:var(--muted);
+      font-size:0.95rem;
+      margin-bottom:0.5rem;
+      display:block;
+    }
+
+    .signature{
+      margin-top:16px;
+      text-align:right;
+      color:var(--muted);
+      font-weight:600;
+      font-size:0.98rem;
+      font-family:'Playfair Display', serif;
+    }
+
+    /* Heartbeat icon animation */
+    .big-heart{
+      position:absolute;
+      right:28px;
+      top:28px;
+      width:90px;
+      height:90px;
+      z-index:0;
+      filter: blur(0.6px) saturate(1.1);
+      opacity:0.12;
+      transform-origin:center;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse{
+      0%{ transform:scale(1); opacity:0.12}
+      50%{ transform:scale(1.12); opacity:0.2}
+      100%{ transform:scale(1); opacity:0.12}
+    }
+
+    /* floating hearts (decorative) */
+    .floating-heart{
+      position:fixed;
+      width:14px;
+      height:14px;
+      z-index:0;
+      pointer-events:none;
+      transform: translateY(0);
+      animation: floatUp linear infinite;
+      opacity:0.9;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(20vh) scale(0.8); opacity:0.9; }
+      to   { transform: translateY(-40vh) scale(1.1); opacity:0.05; }
+    }
+
+    /* small controls */
+    .controls{
+      margin-top:1.1rem;
+      display:flex;
+      gap:10px;
+      justify-content:flex-start;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .btn {
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn.ghost{
+      background:transparent;
+    }
+
+    footer.note{
+      margin-top:1.2rem;
+      color:rgba(255,255,255,0.55);
+      font-size:0.9rem;
+      text-align:center;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:640px){
+      .title h1{ font-size:1.4rem; }
+      .message{ font-size:1rem; }
+      .big-heart{ display:none; }
+    }
+
+    /* typewriter caret */
+    .caret {
+      display:inline-block;
+      width:10px;
+      height:20px;
+      background:linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
+      margin-left:6px;
+      vertical-align:middle;
+      animation: blink 1s steps(2,end) infinite;
+    }
+    @keyframes blink {
+      0%,50%{ opacity:1 }
+      51%,100%{ opacity:0 }
+    }
+
+    /* small scrollbar for message */
+    .message::-webkit-scrollbar{ width:8px; }
+    .message::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.06); border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="brand" aria-hidden="true">
+      <div class="logo">❤</div>
+      <h4>For My Bugs bunny</h4>
+    </header>
+
+    <main class="card" role="main" aria-labelledby="main-title">
+      <div class="top-row">
+        <div class="title">
+          <h1 id="main-title">Happy Valentine's Day, My Love</h1>
+          <p>A little note straight from the heart ❤️</p>
+        </div>
+
+        <div>
+          <button class="heart-btn" id="playPulse" title="Send love">
+            <svg class="heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20s-7-4.435-9.17-6.55C0.798 10.94 3.104 6 7.5 6c2.05 0 3.3 1.17 4.5 2.56C13.2 7.17 14.45 6 16.5 6 20.896 6 23.202 10.94 21.17 13.45 19 15.565 12 20 12 20z" fill="#fff"/>
+            </svg>
+            Send a Hug
+          </button>
+        </div>
+      </div>
+
+      <div class="message" id="message">
+        <span class="small">Read slowly, breathe, and smile.</span>
+        <div id="typed"></div>
+        <div class="signature">— I’m truly grateful for you, always. <span style="color:var(--accent);">I love you mama ❤️</span></div>
+      </div>
+
+      <div class="controls" aria-hidden="true">
+        <button class="btn" id="replay">Replay Message</button>
+        <button class="btn" id="download">Download Page</button>
+        <button class="btn" id="print">Print / Save PDF</button>
+      </div>
+
+      <div class="big-heart" aria-hidden="true">
+        <!-- simple SVG heart -->
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+          <path d="M16 28s-9.333-6.667-12-10c-2.667-3.333-1.333-7 2-9C9 6 12 7 14 9c2-2 5-3 8-0.999 3.333 2 4.667 5.667 2 9-2.667 3.333-12 10-12 10z" fill="#ff6b81"/>
+        </svg>
+      </div>
+
+      <footer class="note" aria-hidden="true">
+        Save this page or share it — it's made just for them 💌
+      </footer>
+    </main>
+  </div>
+
+  <!-- floating decorative hearts (created by JS for variety) -->
+  <script>
+    // The message to display (as provided)
+    const fullMessage = `Happy Valentine’s Day to my Bugs bunny❤️, the one who’s been there through everything, from the loud laughs to the quiet tears. You’ve seen every side of me, and somehow you still choose to stay🫂, even after my foolishness and craziness, That means a lot than words can ever express.
+You make life brighter in ways I can’t fully explain. You listen when I need to talk, make me laugh when I’m down, and remind me that I’m never alone. You’re not just my best friend; you’re family, a rare kind of person I know I’ll always have in my corner.
+I don’t have flowers or chocolates and you don’t want anything according to you today but having someone like you in my life is more than enough. Thank you for being such a genuine soul, for caring the way you do, and for filling my days with love, peace, and happiness.
+I’m truly grateful for you, always. Happy Valentine’s Day, i love you mama❤️`;
+
+    const typedEl = document.getElementById('typed');
+
+    // Typewriter reveal (with preserved line breaks)
+    function typeMessage(text, speed=18){
+      typedEl.innerHTML = '';
+      let i=0;
+      const p = document.createElement('p');
+      p.style.margin = '0';
+      p.style.whiteSpace = 'pre-wrap';
+      typedEl.appendChild(p);
+
+      const caret = document.createElement('span');
+      caret.className = 'caret';
+      p.appendChild(caret);
+
+      function step(){
+        if(i < text.length){
+          // remove caret, add char, then add caret back
+          if(caret.parentNode) caret.parentNode.removeChild(caret);
+          p.textContent = text.slice(0,i+1);
+          p.appendChild(caret);
+          i++;
+          // slight longer pause at punctuation
+          const ch = text[i-1];
+          let delay = speed;
+          if(ch === '.' || ch === '!' || ch === '?') delay = speed * 18;
+          else if(ch === ',' || ch === '—' || ch === ';') delay = speed * 6;
+          setTimeout(step, delay);
+        } else {
+          // finished
+          if(caret.parentNode) caret.parentNode.removeChild(caret);
+        }
+      }
+      step();
+    }
+
+    // initial play after loading
+    window.addEventListener('load', () => {
+      typeMessage(fullMessage, 16);
+      createFloatingHearts(14);
+    });
+
+    // replay button
+    document.getElementById('replay').addEventListener('click', () => {
+      typeMessage(fullMessage, 14);
+      pulseButton(document.getElementById('playPulse'));
+    });
+
+    // "Send a Hug" button pulse visual
+    const playPulseBtn = document.getElementById('playPulse');
+    playPulseBtn.addEventListener('click', () => pulseButton(playPulseBtn));
+
+    function pulseButton(btn){
+      btn.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.06)' },
+        { transform: 'scale(1)' }
+      ], {
+        duration: 520,
+        easing: 'cubic-bezier(.2,.9,.2,1)'
+      });
+      // tiny heart burst
+      heartBurstAt(btn);
+    }
+
+    function heartBurstAt(el){
+      const r = el.getBoundingClientRect();
+      for(let i=0;i<8;i++){
+        const h = createHeart();
+        document.body.appendChild(h);
+        h.style.left = (r.left + r.width/2 + (Math.random()-0.5)*80) + 'px';
+        h.style.top  = (r.top + r.height/2 + (Math.random()-0.5)*40) + 'px';
+        h.style.opacity = '1';
+        const ang = (Math.random()*2*Math.PI);
+        const vx = Math.cos(ang) * (60 + Math.random()*80);
+        const vy = Math.sin(ang) * (40 + Math.random()*80) * -1;
+        h.animate([
+          { transform: 'translate(0px,0px) scale(0.8)', opacity:1 },
+          { transform: `translate(${vx}px,${vy}px) scale(1.2)`, opacity:0 }
+        ], { duration: 900 + Math.random()*400, easing: 'cubic-bezier(.2,.9,.2,1)' })
+        setTimeout(()=> h.remove(), 1400);
+      }
+    }
+
+    function createHeart(){
+      const el = document.createElement('div');
+      el.className = 'floating-heart';
+      const size = 10 + Math.floor(Math.random()*18);
+      el.style.width = size+'px';
+      el.style.height = size+'px';
+      el.style.opacity = 0.95;
+      el.style.left = Math.random()*innerWidth + 'px';
+      el.style.top = innerHeight + 'px';
+      el.style.zIndex = 9999;
+      el.style.pointerEvents = 'none';
+      el.innerHTML = `<svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="${randomHeartColor()}" d="M12 21s-7-4.667-9.166-7.083C0.803 11.97 3.225 7 7.5 7c2.014 0 3.25 1.17 4.5 2.56C12.25 8.17 13.486 7 15.5 7 19.775 7 22.197 11.97 21.166 13.917 19 16.333 12 21 12 21z"/></svg>`;
+      return el;
+    }
+
+    function randomHeartColor(){
+      const colors = ['#ff6b81','#ff8aa0','#ff3b6b','#ff9db2','#ffc1cc'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+
+    // create some gentle floating hearts in background
+    function createFloatingHearts(n=12){
+      for(let i=0;i<n;i++){
+        const h = createHeart();
+        const left = Math.random()*innerWidth;
+        const size = 8 + Math.floor(Math.random()*22);
+        h.style.left = left + 'px';
+        h.style.bottom = (-Math.random()*60 - 10) + 'px';
+        h.style.opacity = 0.75;
+        document.body.appendChild(h);
+
+        const duration = 9000 + Math.random()*12000;
+        const delay = Math.random()*2000;
+        h.style.animationDuration = duration + 'ms';
+        h.style.animationDelay = delay + 'ms';
+      }
+    }
+
+    // download current page as an HTML file
+    document.getElementById('download').addEventListener('click', () => {
+      const content = '<!doctype html>\\n' + document.documentElement.outerHTML;
+      const blob = new Blob([content], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'valentines.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // print
+    document.getElementById('print').addEventListener('click', () => {
+      window.print();
+    });
+
+    // make sure long message is accessible
+    // allow keyboard replay (R)
+    window.addEventListener('keydown', (e) => {
+      if(e.key.toLowerCase() === 'r') {
+        typeMessage(fullMessage, 14);
+      }
+    });
+
+  </script>
+</body>
+</html>
